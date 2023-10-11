@@ -1,5 +1,6 @@
 package com.example.ayushjumpingmindsassignment.repository
 
+
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,9 +34,13 @@ class MemeRepository(
             }
         }else{                   //if not connected to internet showing data from room
 
+
             val memes = memeDatabase.memeDao().getMeme()
             val memeList = memes(Data(memes),true)
             memesLiveData.postValue(memeList)
+
+
+
         }
 
     }

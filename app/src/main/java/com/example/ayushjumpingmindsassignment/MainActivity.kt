@@ -4,10 +4,14 @@ package com.example.ayushjumpingmindsassignment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.ayushjumpingmindsassignment.api.ApiInterface
 import com.example.ayushjumpingmindsassignment.api.ApiUtilities
 import com.example.ayushjumpingmindsassignment.model.Meme
@@ -15,33 +19,59 @@ import com.example.ayushjumpingmindsassignment.model.memes
 import com.example.ayushjumpingmindsassignment.repository.MemeRepository
 import com.example.ayushjumpingmindsassignment.viewmodel.MemeViewModel
 import com.example.ayushjumpingmindsassignment.viewmodel.MemesViewModelFactory
+import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import retrofit2.http.Tag
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var memeViewModel: MemeViewModel
-    private lateinit var memeAdapter: MemeAdapter
-    var memeList = ArrayList<Meme>()
+    lateinit var  pageAdapter: FragmentPageAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        runBlocking {
+            installSplashScreen()
+            delay(3000)
+        }
         setContentView(R.layout.activity_main)
 
-        var recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        var tabLayout=   findViewById<TabLayout>(R.id.tabLayout)
+        var viewPager2=  findViewById<ViewPager2>(R.id.viewPager)
 
-  val memeRepository = (application as HelpingClass).memeRepository
-
-        memeViewModel = ViewModelProvider(this,MemesViewModelFactory(memeRepository))[MemeViewModel::class.java]
+        pageAdapter = FragmentPageAdapter(supportFragmentManager,lifecycle)
 
 
-        memeViewModel.meme.observe(this, Observer {
-            memeList = it.data.memes as ArrayList<Meme>    // Adding fetched data to list
+        tabLayout.addTab(tabLayout.newTab().setText("Feed").setIcon(R.drawable.baseline_emoji_emotions_24))
+        tabLayout.addTab(tabLayout.newTab().setText("Favourite").setIcon(R.drawable.baseline_favorite_24))
 
-            memeAdapter = MemeAdapter(this,memeList)
-            recyclerView.adapter = memeAdapter    //giving memeAdapter to our recyclerView adapter
-      })
+
+
+
+        viewPager2.adapter = pageAdapter
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    viewPager2.currentItem = tab.position
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabLayout.selectTab(tabLayout.getTabAt(position))
+            }
+        })
+
 
    }
 }
