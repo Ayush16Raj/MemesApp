@@ -14,7 +14,7 @@ import com.example.ayushjumpingmindsassignment.room.MemeDatabase
 
 class MemeRepository(
     private val apiInterface: ApiInterface,
-    private val memeDatabase: MemeDatabase,
+     val memeDatabase: MemeDatabase,
     private val applicationContext: Context
 ) {
 
@@ -43,6 +43,16 @@ class MemeRepository(
 
         }
 
+    }
+
+    fun getFavorite(): LiveData<List<Meme>> {
+        return memeDatabase.memeDao().getFavoriteMemes()
+    }
+
+    // Function to toggle the favorite status of a meme
+     fun toggleFavoriteMeme(meme: Meme) {
+        meme.isFavorite = !meme.isFavorite
+        memeDatabase.memeDao().setMemeAsFavorite(meme.id, meme.isFavorite)
     }
 
 }

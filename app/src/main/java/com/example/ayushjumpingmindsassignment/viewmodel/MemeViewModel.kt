@@ -17,4 +17,18 @@ class MemeViewModel(private val memeRepository: MemeRepository): ViewModel() {
 
     val meme : LiveData<memes>
         get() = memeRepository.meme
+
+    // Function to get favorite memes from the repository
+    fun getFavorite(): LiveData<List<Meme>> {
+        return memeRepository.getFavorite()
+    }
+
+    // Function to toggle the favorite status of a meme
+    fun toggleFavoriteMeme(meme: Meme) {
+        viewModelScope.launch(Dispatchers.IO) {
+            memeRepository.toggleFavoriteMeme(meme)
+        }
+    }
+
+
 }

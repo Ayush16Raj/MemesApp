@@ -3,30 +3,17 @@ package com.example.ayushjumpingmindsassignment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.ayushjumpingmindsassignment.api.ApiInterface
-import com.example.ayushjumpingmindsassignment.api.ApiUtilities
-import com.example.ayushjumpingmindsassignment.model.Meme
-import com.example.ayushjumpingmindsassignment.model.memes
-import com.example.ayushjumpingmindsassignment.repository.MemeRepository
-import com.example.ayushjumpingmindsassignment.viewmodel.MemeViewModel
-import com.example.ayushjumpingmindsassignment.viewmodel.MemesViewModelFactory
+import com.example.ayushjumpingmindsassignment.adapter.FragmentPageAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import retrofit2.http.Tag
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var  pageAdapter: FragmentPageAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         runBlocking {
@@ -73,7 +60,13 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+
+
+
+
    }
+
+
 }
 
 

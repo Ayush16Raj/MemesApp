@@ -42,6 +42,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/previewImg"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgAddtoFav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/baseline_favorite_24" />
+
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

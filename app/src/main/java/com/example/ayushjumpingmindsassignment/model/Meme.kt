@@ -13,5 +13,7 @@ data class Meme(
     val id: String,
     val name: String,
     val url: String,
-    val width: Int
+    val width: Int,
+    var isFavorite: Boolean = false
+
 )
